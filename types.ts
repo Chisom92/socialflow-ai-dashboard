@@ -150,3 +150,70 @@ export interface WealthMigration {
   walletCount: number;
   timestamp: Date;
 }
+
+// Token Holder Analysis Types
+export interface TokenHolder {
+  walletAddress: string;
+  tokenSymbol: string;
+  amount: number;
+  value: number;
+  holdingDuration: number;
+  firstPurchaseDate: Date;
+  lastTransactionDate: Date;
+  engagementScore: number;
+}
+
+export interface TokenHolderCohort {
+  cohortId: string;
+  tokenSymbol: string;
+  holderCount: number;
+  avgHoldingDuration: number;
+  avgEngagement: number;
+  totalValue: number;
+  loyaltyScore: number;
+}
+
+export interface TokenLoyaltyMetrics {
+  tokenSymbol: string;
+  totalHolders: number;
+  loyalHolders: number;
+  churnRate: number;
+  avgHoldingPeriod: number;
+  retentionRate: number;
+}
+
+// Whale Identification Types
+export interface WhaleProfile {
+  walletAddress: string;
+  portfolioValue: number;
+  totalTransactions: number;
+  avgTransactionValue: number;
+  engagementScore: number;
+  followingSince: Date;
+  lastActive: Date;
+  topTokens: { symbol: string; value: number }[];
+  riskScore: number;
+  influenceScore: number;
+}
+
+export interface WhaleTransaction {
+  id: string;
+  walletAddress: string;
+  type: 'buy' | 'sell' | 'transfer';
+  tokenSymbol: string;
+  amount: number;
+  value: number;
+  timestamp: Date;
+  fromAddress?: string;
+  toAddress?: string;
+}
+
+export interface WhaleAlert {
+  id: string;
+  walletAddress: string;
+  alertType: 'large_transaction' | 'new_whale' | 'whale_exit' | 'high_engagement';
+  severity: 'low' | 'medium' | 'high';
+  message: string;
+  timestamp: Date;
+  metadata: Record<string, any>;
+}
