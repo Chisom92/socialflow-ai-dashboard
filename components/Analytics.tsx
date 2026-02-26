@@ -35,6 +35,10 @@ export const Analytics: React.FC<ViewProps> = () => {
     alert("Downloading report as PDF... (Check console for details)");
   };
 
+  if (activeTab === 'wealth') {
+    return <AudienceWealthDashboard />;
+  }
+
   return (
     <div className="p-7 space-y-7 animate-fade-in">
       <div className="flex justify-between items-center">
