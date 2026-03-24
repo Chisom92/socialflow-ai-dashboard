@@ -1,7 +1,9 @@
+import './config/runtime';
 import express, { Express } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import aiRoutes from './routes/ai';
 import healthRoutes from './routes/health';
 import statusRoutes from './routes/status';
 
@@ -14,6 +16,7 @@ app.use(express.json({ limit: '10mb' })); // allow base64 image payloads
 app.use(morgan('dev'));
 
 // Routes
+app.use('/ai', aiRoutes);
 app.use('/api/health', healthRoutes);
 app.use('/status', statusRoutes);
 
