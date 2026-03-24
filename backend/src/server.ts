@@ -1,10 +1,9 @@
-import dotenv from 'dotenv';
 import app from './app';
+import { getBackendPort } from './config/runtime';
+import { startDataPruningJob, stopDataPruningJob } from './jobs/dataPruningJob';
 import { startWorkerMonitor, stopWorkerMonitor } from './monitoring/workerMonitorInstance';
 
-dotenv.config();
-
-const PORT = process.env.BACKEND_PORT || 3001;
+const PORT = getBackendPort();
 
 const bootstrap = async (): Promise<void> => {
   try {
@@ -12,6 +11,14 @@ const bootstrap = async (): Promise<void> => {
   } catch (error) {
     console.error(
       `[worker-monitor] Failed to start monitor: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  try {
+    await startDataPruningJob();
+  } catch (error) {
+    console.error(
+      `[data-pruning] Failed to start scheduler: ${error instanceof Error ? error.message : String(error)}`,
     );
   }
 
@@ -27,6 +34,14 @@ const bootstrap = async (): Promise<void> => {
     } catch (error) {
       console.error(
         `[worker-monitor] Failed to stop monitor: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+
+    try {
+      await stopDataPruningJob();
+    } catch (error) {
+      console.error(
+        `[data-pruning] Failed to stop scheduler: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
 
