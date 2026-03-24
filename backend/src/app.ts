@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import { requestIdMiddleware } from './middleware/requestId';
+import { errorHandler, notFoundHandler } from './middleware/error';
 
 const app: Application = express();
 
@@ -30,5 +31,11 @@ app.get('/health', (req, res) => {
 // TODO: Add your routes here
 // app.use('/api/auth', authRoutes);
 // app.use('/api/users', userRoutes);
+
+// 404 handler - must be after all routes
+app.use(notFoundHandler);
+
+// Global error handler - must be last
+app.use(errorHandler);
 
 export default app;
