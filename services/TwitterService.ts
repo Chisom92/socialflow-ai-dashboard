@@ -7,10 +7,6 @@
  * Closes #219
  */
 
-
-
-
-
 import axios, { AxiosInstance, AxiosError } from 'axios';
 
 // ============================================
